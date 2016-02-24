@@ -1,0 +1,5 @@
+#Lambda Function Project Metadata
+#Mon Feb 22 17:36:40 AEDT 2016
+lastDeploymentFunctionName=S3ZipFileLoader
+lastDeploymentBucketName=lambda-function-bucket-ap-northeast-1-1455103808701
+lastDeploymentEndpoint=https\://lambda.ap-northeast-1.amazonaws.com/
