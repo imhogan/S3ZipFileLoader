@@ -5,7 +5,6 @@ import com.amazonaws.util.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -13,7 +12,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +31,7 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
 
     private boolean debug = false;
 
-    private static final String version = "1.1.1";
+    private static final String version = "1.1.2";
 	/*
 	 * (non-Javadoc)
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.Object, com.amazonaws.services.lambda.runtime.Context)
@@ -53,6 +51,8 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
     "SourceBucket": "source bucket name - should be in the same region the stack is being built in",
     "SourceKeys": ["key1.zip", "key2.zip"],
     "TargetBucket": "target bucket name - should be in the same region the stack is being built in",
+    "PublicRead": "keys matching this RegExp will be set to PublicRead, eg ^(images/|xsl/SurveyReports|xsl/f/).*$",
+    "Debug": "true if debug logging is required"
   }
 }
 	 */
