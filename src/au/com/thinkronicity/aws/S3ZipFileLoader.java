@@ -1,7 +1,10 @@
 package au.com.thinkronicity.aws;
 
+/*
 import com.amazonaws.util.json.JSONException;
 import com.amazonaws.util.json.JSONObject;
+*/
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -31,7 +35,7 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
 
     private boolean debug = false;
 
-    private static final String version = "1.1.2";
+    private static final String version = "1.2.0CE";
 	/*
 	 * (non-Javadoc)
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.Object, com.amazonaws.services.lambda.runtime.Context)
@@ -158,6 +162,7 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
             connection.setDoOutput(true);
             connection.setRequestMethod("PUT");
             OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+          /*
             JSONObject cloudFormationJsonResponse = new JSONObject();
             try {
                 cloudFormationJsonResponse.put("Status", operationStatus);
@@ -173,6 +178,34 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
                 e.printStackTrace();
             }
             out.write(cloudFormationJsonResponse.toString());
+            
+            
+                    Map<String,String> map = new HashMap<>();
+        map.put("key1","value1");
+        map.put("key2","value2");
+
+        String mapAsJson = new ObjectMapper().writeValueAsString(map);
+        
+            */
+             Map<String,Object> cloudFormationJsonResponse = new HashMap<String, Object>();
+            try {
+                cloudFormationJsonResponse.put("Status", operationStatus);
+                if (!failedReason.isEmpty()) {
+                    cloudFormationJsonResponse.put("Reason", failedReason);
+                }
+                cloudFormationJsonResponse.put("PhysicalResourceId", context.getLogStreamName());
+                cloudFormationJsonResponse.put("StackId", input.get("StackId"));
+                cloudFormationJsonResponse.put("RequestId", input.get("RequestId"));
+                cloudFormationJsonResponse.put("LogicalResourceId", input.get("LogicalResourceId"));
+                Map<String,String> dataMap = new HashMap<String, String>();
+                dataMap.put("_self_version", version);
+                dataMap.put("SourceZips", srcZipsList);
+                cloudFormationJsonResponse.put("Data", dataMap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            out.write(new ObjectMapper().writeValueAsString(cloudFormationJsonResponse));
+          
             out.close();
             int responseCode = connection.getResponseCode();
             context.getLogger().log(Timestamp()+": Response Code: " + responseCode);
