@@ -4,7 +4,7 @@
     <groupId>THINKronicity</groupId>
     <artifactId>S3ZipFileLoader</artifactId>
     <version>1.2.3CE</version>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 <dependencies>
     <dependency>
       <groupId>junit</groupId>
