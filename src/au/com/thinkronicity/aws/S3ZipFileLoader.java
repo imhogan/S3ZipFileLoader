@@ -35,7 +35,7 @@ public class S3ZipFileLoader implements RequestHandler<Map<String, Object>, Obje
 
     private boolean debug = false;
 
-    private static final String version = "1.2.0CE";
+    private static final String version = "1.2.4CE";
 	/*
 	 * (non-Javadoc)
 	 * @see com.amazonaws.services.lambda.runtime.RequestHandler#handleRequest(java.lang.Object, com.amazonaws.services.lambda.runtime.Context)

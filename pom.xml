@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>THINKronicity</groupId>
     <artifactId>S3ZipFileLoader</artifactId>
-    <version>1.2.3CE</version>
+    <version>1.2.4CE</version>
     <packaging>jar</packaging>
 <dependencies>
     <dependency>
